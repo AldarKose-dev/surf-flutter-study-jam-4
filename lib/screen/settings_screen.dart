@@ -13,8 +13,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _notificationSwitch = false;
-  bool _darkModeSwitch = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,39 +30,30 @@ class _SettingsPageState extends State<SettingsPage> {
         });
         return Scaffold(
           appBar: AppBar(
-            title: Text('Settings'),
+            title: const Text('Settings'),
           ),
           body: ListView(
             children: [
               SwitchListTile(
-                title: Text('Speech to text'),
+                title: const Text('Speech to text'),
                 value: state.isSttTurnedOn,
                 onChanged: (value) {
                   context.read<MagicBallCubit>().changeTextToSpeach();
                 },
               ),
               SwitchListTile(
-                title: Text('Audio effects'),
+                title: const Text('Audio effects'),
                 value: state.isAudioEffectTurnedOn,
                 onChanged: (value) {
                   context.read<MagicBallCubit>().changeAudioEffects();
                 },
               ),
-              // SwitchListTile(
-              //   title: Text('Dragon ball animation speed'),
-              //   value: _darkModeSwitch,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       _darkModeSwitch = value;
-              //     });
-              //   },
-              // ),
               Padding(
                 padding: EdgeInsets.only(left: 20.w, right: 20.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Speed of ball animation"),
+                    const Text("Speed of ball animation"),
                     Slider(
                         value: state.speedOfBouncing.toDouble(),
                         min: 1,
@@ -81,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Music asset path"),
+                    const Text("Music asset path"),
                     Flexible(
                       child: TextButton(
                           onPressed: () =>
@@ -98,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Text animation effect"),
+                    const Text("Text animation effect"),
                     DropdownButton(
                       borderRadius: BorderRadius.circular(12.r),
                       style: Theme.of(context).textTheme.titleSmall,

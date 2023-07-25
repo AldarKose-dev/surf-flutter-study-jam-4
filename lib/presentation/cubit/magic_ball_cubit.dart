@@ -37,7 +37,6 @@ class MagicBallCubit extends Cubit<MagicBallState> {
       AnimationController animationController, double speed) {
     animationController.duration = Duration(microseconds: speed.toInt());
     emit(state.copyWith(speedOfBouncing: speed));
-    print(state.speedOfBouncing);
   }
 
   Future<String> getAnswer() async {
@@ -60,15 +59,12 @@ class MagicBallCubit extends Cubit<MagicBallState> {
   void fetchAnswer() async {
     if (!state.isLoading || state.errorHappened) {
       final player = AudioPlayer();
-      print(state.isLoading);
-      print(state.errorHappened);
       try {
         emit(state.copyWith(isLoading: true));
         String answer = await getAnswer();
 
         emit(state.copyWith(errorHappened: false));
 
-        // final player = AudioPlayer();
         state.assetPath != null
             ? await player.setFilePath(state.assetPath!)
             : await player.setAsset("assets/audio/success.mp3");
@@ -76,7 +72,7 @@ class MagicBallCubit extends Cubit<MagicBallState> {
         FlutterTts ftts = FlutterTts();
         player.setVolume(0.35);
         if (state.isAudioEffectTurnedOn) {
-          player.play(); // Play without waiting for completion
+          player.play();
         }
         emit(state.copyWith(answerText: answer));
         if (state.isSttTurnedOn) {
@@ -86,12 +82,10 @@ class MagicBallCubit extends Cubit<MagicBallState> {
         Future.delayed(Duration(milliseconds: 6000), () {
           emit(state.copyWith(isLoading: false, answerText: ''));
 
-          player.stop(); // Play without waiting for completion
+          player.stop(); 
         });
       } on DioException catch (e) {
-        // print(e);
         emit(state.copyWith(
-            // isLoading: false,
             answerText: DioExceptions.fromDioError(e).toString(),
             errorHappened: true));
 

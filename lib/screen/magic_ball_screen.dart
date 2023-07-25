@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_constructors
 
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -23,8 +23,6 @@ class _MagicBallScreenState extends State<MagicBallScreen>
   late AnimationController _animationController;
   late AnimationController _lightController;
   late Animation<double> _lightAnimation;
-  double divOne = 0;
-  double divFive = 0;
   @override
   void initState() {
     super.initState();
@@ -34,7 +32,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
   void initAnimations() {
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
     )..repeat(reverse: true);
     _lightController = AnimationController(
       vsync: this,
@@ -72,30 +70,19 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                   ),
                 );
               },
-              child: Icon(Icons.settings),
+              child: const Icon(Icons.settings),
             ),
             body: NotificationListener(
-              onNotification: (notify) {
-                print(divOne);
-
-                if (notify is ScrollUpdateNotification) {
-                  setState(() {
-                    divOne += notify.scrollDelta! / 1;
-                    divFive += notify.scrollDelta! / 5;
-                  });
-                }
-                return true;
-              },
               child: Stack(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: const [
+                        colors: [
                           Colors.white,
                           Color.fromRGBO(212, 212, 255, 1),
                         ],
-                        stops: const [0.0, 1.0],
+                        stops: [0.0, 1.0],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -113,22 +100,19 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                         animation: _animationController,
                         builder: (context, child) {
                           return Transform.translate(
-                            offset: Offset(0, 10 * _animationController.value * state.speedOfBouncing),
+                            offset: Offset(
+                                0,
+                                10 *
+                                    _animationController.value *
+                                    state.speedOfBouncing),
                             child: child!,
                           );
                         },
-                        child: Stack(
+                        child: const Stack(
                           children: [
                             Image(
                               image: AssetImage("assets/circle.png"),
                             ),
-                            ParallaxImage(
-                              left: 95,
-                              top: 700 - divOne,
-                              height: 400,
-                              width: 230,
-                              asset: "star",
-                            )
                           ],
                         ),
                       ),
@@ -163,7 +147,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                                                       _lightAnimation.value),
                                               spreadRadius: 5,
                                               blurRadius: 30,
-                                              offset: Offset(0, 0),
+                                              offset: const Offset(0, 0),
                                             ),
                                           ],
                                         ),
@@ -177,7 +161,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                                       fontFamily: "Gill Sans",
                                       fontSize: 25,
                                       color: state.answerText.isNotEmpty
-                                          ? Color(0xff6C698C)
+                                          ? const Color(0xff6C698C)
                                           : null,
                                     ),
                                     textAlign: TextAlign.center,
@@ -203,7 +187,6 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                                                             state.answerText)
                                       ],
                                       onTap: () {
-                                        print("Tap Event");
                                       },
                                     ),
                                   ),
@@ -214,13 +197,14 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                         ),
                       ),
                     ),
-                    
                   Padding(
                     padding: EdgeInsets.only(bottom: 60.h),
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(
-                        "Нажмите на шар или потрясите телефон",
+                        kIsWeb
+                            ? "Нажмите на шар "
+                            : "Нажмите на шар или потрясите телефон",
                         style: TextStyle(
                           fontFamily: "Gill Sans",
                           fontSize: 16,
@@ -237,39 +221,5 @@ class _MagicBallScreenState extends State<MagicBallScreen>
         },
       ),
     );
-  }
-}
-
-class ParallaxImage extends StatelessWidget {
-  const ParallaxImage({
-    Key? key,
-    required this.left,
-    required this.top,
-    required this.asset,
-    required this.height,
-    required this.width,
-  }) : super(key: key);
-
-  final double left;
-  final double top;
-  final String asset;
-  final double height;
-  final double width;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-        left: left,
-        top: top,
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: ExactAssetImage("assets/$asset.png")),
-              borderRadius: BorderRadius.circular(12.0)),
-          height: height,
-          width: width,
-          child: Stack(children: []),
-        ));
   }
 }
