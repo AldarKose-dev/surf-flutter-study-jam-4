@@ -1,5 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.surf_practice_chat_flutter">
+    <queries>
+    <intent>
+        <action android:name="android.intent.action.TTS_SERVICE" />
+    </intent>
+</queries>
    <application
         android:label="surf_practice_chat_flutter"
         android:icon="@mipmap/ic_launcher">
