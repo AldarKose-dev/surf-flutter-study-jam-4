@@ -201,7 +201,7 @@ class _$_MagicBallState implements _MagicBallState {
   const _$_MagicBallState(
       {this.isAudioEffectTurnedOn = true,
       this.isSttTurnedOn = true,
-      this.speedOfBouncing = 1500,
+      this.speedOfBouncing = 1,
       this.answerText = "",
       this.isLoading = false,
       this.assetPath,

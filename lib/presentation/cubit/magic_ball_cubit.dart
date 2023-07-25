@@ -37,6 +37,7 @@ class MagicBallCubit extends Cubit<MagicBallState> {
       AnimationController animationController, double speed) {
     animationController.duration = Duration(microseconds: speed.toInt());
     emit(state.copyWith(speedOfBouncing: speed));
+    print(state.speedOfBouncing);
   }
 
   Future<String> getAnswer() async {
@@ -55,7 +56,7 @@ class MagicBallCubit extends Cubit<MagicBallState> {
       emit(state.copyWith(assetPath: result.files.first.path!));
     }
   }
-  
+
   void fetchAnswer() async {
     if (!state.isLoading || state.errorHappened) {
       final player = AudioPlayer();

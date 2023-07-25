@@ -7,7 +7,7 @@ class MagicBallState with _$MagicBallState {
   const factory MagicBallState(
       {@Default(true) bool isAudioEffectTurnedOn,
       @Default(true) bool isSttTurnedOn,
-      @Default(1500) double speedOfBouncing,
+      @Default(1) double speedOfBouncing,
       @Default("") String answerText,
       @Default(false) bool isLoading,
       String? assetPath,

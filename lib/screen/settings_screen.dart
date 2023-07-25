@@ -58,13 +58,24 @@ class _SettingsPageState extends State<SettingsPage> {
               //     });
               //   },
               // ),
-              // Slider(
-              //     value: state.speedOfBouncing.toDouble(),
-              //     min: 100,
-              //     max: 1500,
-              //     onChanged: (newVal) => context
-              //         .read<MagicBallCubit>()
-              //         .changeBounceSpeed(widget.animationController, newVal))
+              Padding(
+                padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Speed of ball animation"),
+                    Slider(
+                        value: state.speedOfBouncing.toDouble(),
+                        min: 1,
+                        max: 10,
+                        onChanged: (newVal) {
+                          context.read<MagicBallCubit>().changeBounceSpeed(
+                              widget.animationController, newVal);
+                        }),
+                  ],
+                ),
+              ),
+
               Padding(
                 padding: EdgeInsets.only(left: 20.w, right: 20.w),
                 child: Row(
