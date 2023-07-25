@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,18 +25,22 @@ class _MagicBallScreenState extends State<MagicBallScreen>
   @override
   void initState() {
     super.initState();
-    initAnimations();
+    initAnimations(); // Initialize animation controllers and animations
   }
 
   void initAnimations() {
+    // Initialize animation controllers for Magic Ball animation and light effect
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     )..repeat(reverse: true);
+
     _lightController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     )..repeat(reverse: true);
+
+    // Create an animation with a curved easeInOut effect for the light intensity
     _lightAnimation = Tween<double>(begin: 0.1, end: 0.6).animate(
       CurvedAnimation(
         parent: _lightController,
@@ -56,6 +59,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
             floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
+                // Navigate to the SettingsPage and pass the animationController as a parameter
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -75,6 +79,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
             body: NotificationListener(
               child: Stack(
                 children: [
+                  // Background gradient
                   Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
@@ -93,6 +98,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                     child: GestureDetector(
                       onTap: () {
                         if (!state.isLoading || state.errorHappened) {
+                          // Fetch an answer when the Magic Ball is tapped
                           context.read<MagicBallCubit>().fetchAnswer();
                         }
                       },
@@ -100,6 +106,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                         animation: _animationController,
                         builder: (context, child) {
                           return Transform.translate(
+                            // Apply bouncing animation to the Magic Ball
                             offset: Offset(
                                 0,
                                 10 *
@@ -118,6 +125,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                       ),
                     ),
                   ),
+                  // Loading animation and answer display
                   if (state.isLoading)
                     Align(
                       alignment: Alignment.center,
@@ -169,6 +177,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                                       repeatForever: state.errorHappened &&
                                           state.isLoading,
                                       animatedTexts: [
+                                        // Animations for displaying the answer text
                                         state.selectedTextAnimation == "Fade"
                                             ? FadeAnimatedText(state.answerText)
                                             : state.selectedTextAnimation ==
@@ -187,6 +196,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                                                             state.answerText)
                                       ],
                                       onTap: () {
+                                        // Handle tap on the animated text (if needed)
                                       },
                                     ),
                                   ),
@@ -202,6 +212,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                     child: const Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(
+                        // Display a message to guide the user to interact with the Magic Ball
                         kIsWeb
                             ? "Нажмите на шар "
                             : "Нажмите на шар или потрясите телефон",
