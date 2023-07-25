@@ -98,7 +98,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Music asset path"),
+                    Text("Text animation effect"),
                     DropdownButton(
                       borderRadius: BorderRadius.circular(12.r),
                       style: Theme.of(context).textTheme.titleSmall,

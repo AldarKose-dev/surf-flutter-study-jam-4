@@ -214,6 +214,7 @@ class _MagicBallScreenState extends State<MagicBallScreen>
                         ),
                       ),
                     ),
+                    
                   Padding(
                     padding: EdgeInsets.only(bottom: 60.h),
                     child: Align(
